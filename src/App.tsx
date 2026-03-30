@@ -32,6 +32,8 @@ import {
 } from 'recharts';
 import optiStageLogo from './assets/optistage_logo.png';
 
+const API_URL = 'https://stageflow-backend-e6lo.onrender.com';
+
 // --- Components ---
 
 const Navbar = ({ user, onLogout }: { user: User | null, onLogout: () => void }) => (
@@ -120,16 +122,16 @@ export default function App() {
     if (!user) return;
     try {
       const [offersRes, appsRes] = await Promise.all([
-        fetch(`/api/offers?role=${user.role}&company_id=${user.id}`),
-        fetch(`/api/applications?role=${user.role}&${user.role === 'student' ? 'student_id' : 'company_id'}=${user.id}`)
+        fetch(`${API_URL}/api/offers?role=${user.role}&company_id=${user.id}`),
+        fetch(`${API_URL}/api/applications?role=${user.role}&${user.role === 'student' ? 'student_id' : 'company_id'}=${user.id}`)
       ]);
       setOffers(await offersRes.json());
       setApplications(await appsRes.json());
 
       if (user.role === 'admin') {
         const [usersRes, statsRes] = await Promise.all([
-          fetch('/api/admin/users'),
-          fetch('/api/stats')
+          fetch(`${API_URL}/api/admin/users`),
+          fetch(`${API_URL}/api/stats`)
         ]);
         setUsers(await usersRes.json());
         setStats(await statsRes.json());
@@ -144,7 +146,7 @@ export default function App() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -169,7 +171,7 @@ export default function App() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role, name })
@@ -373,7 +375,7 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
 
   const handleApply = async () => {
     if (!applyingTo) return;
-    const res = await fetch('/api/applications', {
+    const res = await fetch(`${API_URL}/api/applications`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -629,7 +631,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
   };
 
   const handleAddOffer = async () => {
-    await fetch('/api/offers', {
+    await fetch(`${API_URL}/api/offers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...newOffer, company_id: user.id })
@@ -640,7 +642,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
   };
 
   const handleAppStatus = async (id: number, status: string, feedback: string = '', acceptance_document: string = '') => {
-    await fetch(`/api/applications/${id}`, {
+    await fetch(`${API_URL}/api/applications/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status, feedback, acceptance_document })
@@ -986,7 +988,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
   const [confirmDeleteId, setConfirmDeleteId] = useState<any>(null);
 
   const handleUserStatus = async (id: number, status: string) => {
-    await fetch(`/api/admin/users/${id}/status`, {
+    await fetch(`${API_URL}/api/admin/users/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -995,7 +997,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
   };
 
   const handleOfferStatus = async (id: number, status: string) => {
-    await fetch(`/api/offers/${id}/status`, {
+    await fetch(`${API_URL}/api/offers/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -1004,7 +1006,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
   };
 
   const handleDeleteOffer = async (id: any) => {
-    await fetch(`/api/offers/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/api/offers/${id}`, { method: 'DELETE' });
     setConfirmDeleteId(null);
     onRefresh();
   };

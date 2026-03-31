@@ -31,6 +31,7 @@ import {
   PieChart, Pie, Cell, Legend
 } from 'recharts';
 import optiStageLogo from './assets/optistage_logo.png';
+import studentHero from './assets/student_hero.png';
 
 const API_URL = 'https://stageflow-backend-e6lo.onrender.com';
 
@@ -84,9 +85,219 @@ const Badge = ({ status }: { status: string }) => {
 
 // --- Main App ---
 
+// --- Landing Page Component ---
+
+const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-white" dir="rtl">
+      {/* Header */}
+      <header
+        className="sticky top-0 z-50 transition-all duration-300"
+        style={{
+          background: scrolled ? 'rgba(255,255,255,0.95)' : 'white',
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          boxShadow: scrolled ? '0 1px 20px rgba(0,0,0,0.08)' : 'none',
+          borderBottom: scrolled ? '1px solid #f0f0f0' : 'none'
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          {/* Logo - Left side (in RTL this renders on the right visually) */}
+          <div className="flex items-center gap-3">
+            <div className="bg-white rounded-2xl p-1 shadow-sm border border-zinc-100">
+              <img src={optiStageLogo} alt="OptiStage" className="h-10 w-10 rounded-xl object-cover" />
+            </div>
+            <div>
+              <span className="font-extrabold text-xl tracking-tight text-zinc-900">OptiStage</span>
+              <p className="text-xs text-zinc-400 leading-none">منصة التربص الذكية</p>
+            </div>
+          </div>
+          <button
+            onClick={onGetStarted}
+            className="px-5 py-2 text-sm font-semibold text-blue-600 border-2 border-blue-100 rounded-xl hover:bg-blue-50 transition-all duration-200"
+          >
+            تسجيل الدخول
+          </button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="max-w-7xl mx-auto px-6 pt-16 pb-24">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          {/* Text Content - Right side in RTL */}
+          <div className="flex-1 text-right">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse inline-block"></span>
+              منصة الطلبة الجزائريين للتربص
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-zinc-900 leading-tight mb-6">
+              🚀 ابدأ مستقبلك المهني
+              <span
+                className="block mt-1"
+                style={{
+                  background: 'linear-gradient(135deg, #2563EB 0%, #10B981 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                مع OptiStage
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg text-zinc-500 leading-relaxed mb-8 max-w-xl">
+              منصتك الذكية التي تجمع بين الطلبة والشركات للعثور على أفضل فرص التربص والتدريب، حيث يمكن للطلبة اكتشاف عروض متنوعة وتطوير مهاراتهم، كما تتيح للشركات نشر عروضها بسهولة والوصول إلى مواهب شابة ومؤهلة. ابدأ اليوم وخطو أول خطوة نحو مسيرتك المهنية بثقة.
+            </p>
+
+            {/* Features mini list */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-10 text-sm font-medium text-zinc-600">
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald-500">✔️</span> آلاف فرص التربص
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald-500">✔️</span> شركات موثوقة
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald-500">✔️</span> تسجيل سريع ومجاني
+              </span>
+            </div>
+
+            {/* CTA Button */}
+            <button
+              onClick={onGetStarted}
+              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0"
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                borderRadius: '10px',
+                boxShadow: '0 4px 20px rgba(37, 99, 235, 0.35)'
+              }}
+            >
+              <span>🔵 ابدأ الآن</span>
+              <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1">←</span>
+            </button>
+
+            {/* Social proof */}
+            <p className="mt-5 text-sm text-zinc-400">
+              انضم إلى آلاف الطلاب الذين وجدوا فرصتهم عبر OptiStage
+            </p>
+          </div>
+
+          {/* Illustration - Left side in RTL */}
+          <div className="flex-1 flex justify-center lg:justify-start relative">
+            {/* Background decoration */}
+            <div
+              className="absolute inset-0 rounded-3xl opacity-30"
+              style={{
+                background: 'radial-gradient(ellipse at center, #BFDBFE 0%, #D1FAE5 50%, transparent 80%)'
+              }}
+            ></div>
+            <div
+              className="relative z-10 rounded-3xl overflow-hidden"
+              style={{
+                boxShadow: '0 20px 60px rgba(37, 99, 235, 0.12)'
+              }}
+            >
+              <img
+                src={studentHero}
+                alt="طالب مع لابتوب"
+                className="w-full max-w-md object-cover"
+                style={{ borderRadius: '24px' }}
+              />
+            </div>
+            {/* Floating badges */}
+            <div
+              className="absolute top-4 left-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
+            >
+              <span className="text-blue-500 text-base">🎯</span> +500 عرض تربص
+            </div>
+            <div
+              className="absolute bottom-4 right-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
+            >
+              <span className="text-emerald-500 text-base">✅</span> شركات موثوقة
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section
+        className="py-20"
+        style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%)' }}
+      >
+        <div className="max-w-7xl mx-auto px-6 text-center" dir="rtl">
+          <h2 className="text-3xl font-extrabold text-zinc-900 mb-4">لماذا OptiStage؟</h2>
+          <p className="text-zinc-500 mb-12 max-w-xl mx-auto">كل ما تحتاجه في مكان واحد لإطلاق مسيرتك المهنية</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { icon: '🔍', title: 'بحث ذكي', desc: 'ابحث بسهولة عن التربصات حسب التخصص، الموقع، والمدة.' },
+              { icon: '🏢', title: 'شركات معتمدة', desc: 'جميع الشركات المسجلة خضعت للمراجعة والتحقق من الهوية.' },
+              { icon: '⚡', title: 'تقديم فوري', desc: 'أرسل ملفك ورسالتك التحفيزية بنقرة واحدة فقط.' },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="bg-white p-8 rounded-2xl border border-blue-50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center"
+                style={{ boxShadow: '0 2px 16px rgba(37,99,235,0.06)' }}
+              >
+                <div className="text-5xl mb-4">{f.icon}</div>
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">{f.title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-20" dir="rtl">
+        <div
+          className="max-w-4xl mx-auto mx-6 rounded-3xl p-12 text-center text-white"
+          style={{
+            background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #0D9488 100%)',
+            boxShadow: '0 20px 60px rgba(37, 99, 235, 0.3)',
+            margin: '0 24px'
+          }}
+        >
+          <h2 className="text-3xl font-extrabold mb-4">جاهز تبدأ رحلتك؟</h2>
+          <p className="text-blue-100 mb-8 text-lg">انضم مجاناً واكتشف فرص التربص التي تناسبك</p>
+          <button
+            onClick={onGetStarted}
+            className="bg-white text-blue-700 font-bold px-10 py-4 rounded-xl hover:bg-blue-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 text-lg"
+          >
+            إنشاء حساب مجاني →
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-100 py-8" dir="rtl">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <img src={optiStageLogo} alt="OptiStage" className="h-7 w-7 rounded-lg object-cover" />
+            <span className="font-bold text-zinc-700">OptiStage</span>
+          </div>
+          <p className="text-zinc-400 text-sm">© 2025 OptiStage — منصة طلبة الجزائر للبحث عن تربصات</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+// --- Main App ---
+
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
-  const [view, setView] = useState<'login' | 'register' | 'dashboard'>('login');
+  const [view, setView] = useState<'landing' | 'login' | 'register' | 'dashboard'>('landing');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -193,10 +404,14 @@ export default function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    setView('login');
+    setView('landing');
   };
 
   // --- Views ---
+
+  if (view === 'landing') {
+    return <LandingPage onGetStarted={() => setView('login')} />;
+  }
 
   if (view === 'login' || view === 'register') {
     return (
@@ -208,6 +423,13 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white p-8 rounded-2xl shadow-xl border border-zinc-200 w-full max-w-md"
           >
+            {/* Back to landing */}
+            <button
+              onClick={() => setView('landing')}
+              className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-blue-600 transition-colors mb-4"
+            >
+              ← العودة للصفحة الرئيسية
+            </button>
             <div className="flex justify-center mb-4">
               <img src={optiStageLogo} alt="OptiStage Logo" className="h-16 w-16 rounded-2xl object-cover shadow-md" />
             </div>

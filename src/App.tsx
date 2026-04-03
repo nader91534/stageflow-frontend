@@ -389,7 +389,7 @@ export default function App() {
       });
       const data = await res.json();
       if (res.ok) {
-        alert("Inscription réussie sur OptiStage ! En attente de validation par l'administrateur.");
+        alert("Registration successful on OptiStage! Awaiting administrator validation.");
         setView('login');
       } else {
         setError(data.error);
@@ -428,48 +428,48 @@ export default function App() {
               onClick={() => setView('landing')}
               className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-blue-600 transition-colors mb-4"
             >
-              ← العودة للصفحة الرئيسية
+              ← Back to Home
             </button>
             <div className="flex justify-center mb-4">
               <img src={optiStageLogo} alt="OptiStage Logo" className="h-16 w-16 rounded-2xl object-cover shadow-md" />
             </div>
             <h2 className="text-2xl font-bold text-zinc-900 mb-2">
-              {view === 'login' ? 'Connexion' : 'Inscription'}
+              {view === 'login' ? 'Sign In' : 'Register'}
             </h2>
             <p className="text-zinc-500 mb-8">
-              {view === 'login' ? 'Accédez à votre espace OptiStage' : 'Rejoignez OptiStage — منصة طلبة الجزائر للبحث عن تربصات'}
+              {view === 'login' ? 'Access your OptiStage account' : 'Join OptiStage — The Algerian internship platform'}
             </p>
 
             <form onSubmit={view === 'login' ? handleLogin : handleRegister} className="space-y-4">
               {view === 'register' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-1">Nom complet</label>
+                    <label className="block text-sm font-medium text-zinc-700 mb-1">Full Name</label>
                     <input 
                       required
                       type="text" 
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                      placeholder="Jean Dupont"
+                      placeholder="John Doe"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-1">Rôle</label>
+                    <label className="block text-sm font-medium text-zinc-700 mb-1">Role</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setRole('student')}
                         className={`py-2 rounded-lg border text-sm font-medium transition-all ${role === 'student' ? 'bg-indigo-50 border-indigo-600 text-indigo-600' : 'bg-white border-zinc-300 text-zinc-600 hover:bg-zinc-50'}`}
                       >
-                        Étudiant
+                        Student
                       </button>
                       <button
                         type="button"
                         onClick={() => setRole('company')}
                         className={`py-2 rounded-lg border text-sm font-medium transition-all ${role === 'company' ? 'bg-indigo-50 border-indigo-600 text-indigo-600' : 'bg-white border-zinc-300 text-zinc-600 hover:bg-zinc-50'}`}
                       >
-                        Entreprise
+                        Company
                       </button>
                     </div>
                   </div>
@@ -483,11 +483,11 @@ export default function App() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                  placeholder="email@exemple.com"
+                  placeholder="email@example.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-zinc-700 mb-1">Mot de passe</label>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Password</label>
                 <div className="relative">
                   <input 
                     required
@@ -514,7 +514,7 @@ export default function App() {
                 disabled={loading}
                 className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
               >
-                {loading ? 'Chargement...' : (view === 'login' ? 'Se connecter' : "S'inscrire")}
+                {loading ? 'Loading...' : (view === 'login' ? 'Sign In' : 'Sign Up')}
               </button>
             </form>
 
@@ -523,7 +523,7 @@ export default function App() {
                 onClick={() => setView(view === 'login' ? 'register' : 'login')}
                 className="text-sm text-indigo-600 hover:underline font-medium"
               >
-                {view === 'login' ? "Pas encore de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}
+                {view === 'login' ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
               </button>
             </div>
           </motion.div>
@@ -539,9 +539,9 @@ export default function App() {
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="bg-white p-8 rounded-2xl shadow-xl border border-zinc-200 w-full max-w-md text-center">
             <Clock className="w-16 h-16 text-amber-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-zinc-900 mb-2">Compte en attente</h2>
-            <p className="text-zinc-500 mb-6">Votre compte est en cours de validation par l'administrateur. Vous recevrez un accès complet une fois validé.</p>
-            <button onClick={handleLogout} className="text-indigo-600 font-medium hover:underline">Retour à la connexion</button>
+            <h2 className="text-2xl font-bold text-zinc-900 mb-2">Account Pending</h2>
+            <p className="text-zinc-500 mb-6">Your account is being reviewed by the administrator. You will receive full access once validated.</p>
+            <button onClick={handleLogout} className="text-indigo-600 font-medium hover:underline">Back to Sign In</button>
           </div>
         </div>
       </div>
@@ -609,7 +609,7 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
     });
     if (!res.ok) {
       const data = await res.json();
-      alert(data.error || 'Erreur lors de la candidature.');
+      alert(data.error || 'Error submitting your application.');
     }
     setApplyingTo(null);
     setCoverLetter('');
@@ -621,19 +621,19 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-zinc-900">Espace Étudiant</h1>
+        <h1 className="text-3xl font-bold text-zinc-900">Student Dashboard</h1>
         <div className="flex bg-white rounded-lg p-1 border border-zinc-200 shadow-sm">
           <button 
             onClick={() => setActiveTab('offers')}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'offers' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
           >
-            Offres
+            Offers
           </button>
           <button 
             onClick={() => setActiveTab('my-apps')}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'my-apps' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
           >
-            Mes Candidatures
+            My Applications
           </button>
         </div>
       </div>
@@ -647,13 +647,13 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Rechercher par titre, entreprise ou lieu..."
+              placeholder="Search by title, company, or location..."
               className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-white shadow-sm text-sm"
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredOffers.length === 0 ? (
-              <p className="text-zinc-400 text-sm col-span-3 text-center py-10">Aucune offre ne correspond à votre recherche.</p>
+              <p className="text-zinc-400 text-sm col-span-3 text-center py-10">No offers match your search.</p>
             ) : filteredOffers.map((offer: Offer) => (
             <motion.div 
               layout
@@ -690,8 +690,8 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                     }`}
                   >
                     {alreadyApplied ? (
-                      <><CheckCircle className="w-4 h-4" /> Déjà postulé</>
-                    ) : 'Postuler'}
+                      <><CheckCircle className="w-4 h-4" /> Already Applied</>
+                    ) : 'Apply'}
                   </button>
                 );
               })()}
@@ -704,10 +704,10 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-zinc-50 border-b border-zinc-200">
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offre</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Entreprise</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offer</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Company</th>
                 <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Statut</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -733,7 +733,7 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                           download={`acceptation_${app.offer_title || 'document'}.pdf`}
                           className="text-emerald-600 text-sm font-medium hover:underline flex items-center gap-1"
                         >
-                          <Download className="w-4 h-4" /> Télécharger document
+                          <Download className="w-4 h-4" /> Download Document
                         </a>
                       )}
                       {app.status === 'accepted' && !app.report_data && (
@@ -760,18 +760,18 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
               exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white p-8 rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-lg"
             >
-              <h2 className="text-2xl font-bold text-zinc-900 mb-2">Postuler pour {applyingTo.title}</h2>
-              <p className="text-zinc-500 mb-6">Envoyez votre candidature à {applyingTo.company_name}</p>
+              <h2 className="text-2xl font-bold text-zinc-900 mb-2">Apply for {applyingTo.title}</h2>
+              <p className="text-zinc-500 mb-6">Send your application to {applyingTo.company_name}</p>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-1">Lettre de motivation</label>
+                  <label className="block text-sm font-medium text-zinc-700 mb-1">Cover Letter</label>
                   <textarea 
                     rows={4}
                     value={coverLetter}
                     onChange={(e) => setCoverLetter(e.target.value)}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                    placeholder="Pourquoi êtes-vous le candidat idéal ?"
+                    placeholder="Why are you the ideal candidate?"
                   />
                 </div>
                 <div
@@ -791,12 +791,12 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                     <>
                       <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
                       <p className="text-sm font-semibold text-emerald-700">{cvFile.name}</p>
-                      <p className="text-xs text-emerald-500 mt-1">Cliquez pour changer</p>
+                      <p className="text-xs text-emerald-500 mt-1">Click to change</p>
                     </>
                   ) : (
                     <>
                       <FileUp className="w-8 h-8 text-zinc-400 mx-auto mb-2" />
-                      <p className="text-sm font-medium text-zinc-600">Cliquez pour uploader votre CV (PDF)</p>
+                      <p className="text-sm font-medium text-zinc-600">Click to upload your CV (PDF)</p>
                       <p className="text-xs text-zinc-400 mt-1">Maximum 5MB</p>
                     </>
                   )}
@@ -808,13 +808,13 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                   onClick={() => setApplyingTo(null)}
                   className="flex-1 py-2.5 border border-zinc-300 rounded-lg font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                 >
-                  Annuler
+                  Cancel
                 </button>
                 <button 
                   onClick={handleApply}
                   className="flex-1 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
-                  Envoyer
+                  Submit
                 </button>
               </div>
             </motion.div>
@@ -875,27 +875,27 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-zinc-900">Espace Entreprise</h1>
+        <h1 className="text-3xl font-bold text-zinc-900">Company Dashboard</h1>
         <div className="flex items-center gap-4">
           <div className="flex bg-white rounded-lg p-1 border border-zinc-200 shadow-sm">
             <button 
               onClick={() => setActiveTab('offers')}
               className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'offers' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
             >
-              Mes Offres
+              My Offers
             </button>
             <button 
               onClick={() => setActiveTab('candidates')}
               className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'candidates' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
             >
-              Candidats
+              Candidates
             </button>
           </div>
           <button 
             onClick={() => setShowAddOffer(true)}
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors shadow-sm"
           >
-            <Plus className="w-4 h-4" /> Publier
+            <Plus className="w-4 h-4" /> Post Offer
           </button>
         </div>
       </div>
@@ -913,7 +913,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
               <div className="flex items-center gap-4 pt-4 border-t border-zinc-100">
                 <div className="flex items-center gap-1.5 text-xs text-zinc-500">
                   <Users className="w-3.5 h-3.5" /> 
-                  {applications.filter((a: any) => a.offer_id === offer.id).length} candidats
+                  {applications.filter((a: any) => a.offer_id === offer.id).length} candidates
                 </div>
               </div>
             </div>
@@ -924,9 +924,9 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-zinc-50 border-b border-zinc-200">
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Étudiant</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offre</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Statut</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Student</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offer</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
@@ -945,14 +945,14 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                         <button 
                           onClick={() => setDecidingApp({ id: app.id, status: 'accepted' })}
                           className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
-                          title="Accepter"
+                          title="Accept"
                         >
                           <CheckCircle className="w-5 h-5" />
                         </button>
                         <button 
                           onClick={() => setDecidingApp({ id: app.id, status: 'rejected' })}
                           className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                          title="Refuser"
+                          title="Reject"
                         >
                           <XCircle className="w-5 h-5" />
                         </button>
@@ -963,7 +963,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                         href={app.acceptance_document}
                         download={`acceptation_${app.offer_title || 'document'}.pdf`}
                         className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors inline-flex"
-                        title="Télécharger le document d'acceptation"
+                        title="Download acceptance document"
                       >
                         <Paperclip className="w-5 h-5" />
                       </a>
@@ -971,7 +971,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                     <button
                       onClick={() => setPreviewingCvApp(app)}
                       className="p-1.5 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-colors"
-                      title="Voir le CV"
+                      title="View CV"
                     >
                       <FileText className="w-5 h-5" />
                     </button>
@@ -994,19 +994,19 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
               className="bg-white p-8 rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-md"
             >
               <h2 className="text-2xl font-bold text-zinc-900 mb-2">
-                {decidingApp.status === 'accepted' ? 'Accepter la candidature' : 'Refuser la candidature'}
+                {decidingApp.status === 'accepted' ? 'Accept Application' : 'Reject Application'}
               </h2>
-              <p className="text-zinc-500 mb-6">Ajoutez un message pour l'étudiant (optionnel).</p>
+              <p className="text-zinc-500 mb-6">Add a message for the student (optional).</p>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-1">Commentaire / Feedback</label>
+                  <label className="block text-sm font-medium text-zinc-700 mb-1">Comment / Feedback</label>
                   <textarea 
                     rows={3}
                     value={feedback}
                     onChange={(e) => setFeedback(e.target.value)}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                    placeholder="Ex: Nous sommes ravis de vous accueillir..."
+                    placeholder="E.g. We are pleased to welcome you..."
                   />
                 </div>
 
@@ -1014,7 +1014,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                 {decidingApp.status === 'accepted' && (
                   <div>
                     <label className="block text-sm font-medium text-zinc-700 mb-1">
-                      Document d'acceptation (PDF, optionnel)
+                      Acceptance Document (PDF, optional)
                     </label>
                     <div
                       className={`border-2 border-dashed rounded-xl p-5 text-center transition-colors cursor-pointer ${
@@ -1033,13 +1033,13 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                         <>
                           <CheckCircle className="w-7 h-7 text-emerald-500 mx-auto mb-1" />
                           <p className="text-sm font-semibold text-emerald-700">{acceptanceFile.name}</p>
-                          <p className="text-xs text-emerald-500 mt-0.5">Cliquez pour changer</p>
+                          <p className="text-xs text-emerald-500 mt-0.5">Click to change</p>
                         </>
                       ) : (
                         <>
                           <FileUp className="w-7 h-7 text-zinc-400 mx-auto mb-1" />
-                          <p className="text-sm font-medium text-zinc-600">Cliquez pour joindre un document PDF</p>
-                          <p className="text-xs text-zinc-400 mt-0.5">Lettre d'acceptation, convention de stage...</p>
+                          <p className="text-sm font-medium text-zinc-600">Click to attach a PDF document</p>
+                          <p className="text-xs text-zinc-400 mt-0.5">Acceptance letter, internship agreement...</p>
                         </>
                       )}
                     </div>
@@ -1052,7 +1052,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                   onClick={closeDecisionModal}
                   className="flex-1 py-2.5 border border-zinc-300 rounded-lg font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                 >
-                  Annuler
+                  Cancel
                 </button>
                 <button 
                   onClick={() => {
@@ -1061,7 +1061,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                   }}
                   className={`flex-1 py-2.5 text-white rounded-lg font-medium transition-colors ${decidingApp.status === 'accepted' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-rose-600 hover:bg-rose-700'}`}
                 >
-                  Confirmer
+                  Confirm
                 </button>
               </div>
             </motion.div>
@@ -1084,9 +1084,9 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
               <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 shrink-0">
                 <div>
                   <h2 className="text-lg font-bold text-zinc-900">
-                    CV de {previewingCvApp.student_name}
+                    CV of {previewingCvApp.student_name}
                   </h2>
-                  <p className="text-sm text-zinc-500">Candidature pour : {previewingCvApp.offer_title}</p>
+                  <p className="text-sm text-zinc-500">Application for: {previewingCvApp.offer_title}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {previewingCvApp.cv_data && previewingCvApp.cv_data !== 'no_cv' && (
@@ -1095,7 +1095,7 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                       download={`CV_${previewingCvApp.student_name || 'etudiant'}.pdf`}
                       className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
                     >
-                      <Download className="w-4 h-4" /> Télécharger
+                      <Download className="w-4 h-4" /> Download
                     </a>
                   )}
                   <button
@@ -1112,14 +1112,14 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                 {previewingCvApp.cv_data && previewingCvApp.cv_data !== 'no_cv' ? (
                   <iframe
                     src={previewingCvApp.cv_data}
-                    title="CV Étudiant"
+                    title="Student CV"
                     className="w-full h-full border-0"
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full text-zinc-400 gap-4">
                     <FileText className="w-16 h-16 opacity-30" />
-                    <p className="text-lg font-medium">Aucun CV soumis</p>
-                    <p className="text-sm">L'étudiant n'a pas joint de CV à sa candidature.</p>
+                    <p className="text-lg font-medium">No CV submitted</p>
+                    <p className="text-sm">The student did not attach a CV to their application.</p>
                   </div>
                 )}
               </div>
@@ -1138,17 +1138,17 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
               exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white p-8 rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-2xl"
             >
-              <h2 className="text-2xl font-bold text-zinc-900 mb-6">Nouvelle Offre de Stage</h2>
+              <h2 className="text-2xl font-bold text-zinc-900 mb-6">New Internship Offer</h2>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-zinc-700 mb-1">Titre de l'offre</label>
+                  <label className="block text-sm font-medium text-zinc-700 mb-1">Offer Title</label>
                   <input 
                     type="text" 
                     value={newOffer.title}
                     onChange={(e) => setNewOffer({...newOffer, title: e.target.value})}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
-                    placeholder="Développeur Fullstack Junior"
+                    placeholder="Junior Fullstack Developer"
                   />
                 </div>
                 <div className="col-span-2">
@@ -1158,27 +1158,27 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                     value={newOffer.description}
                     onChange={(e) => setNewOffer({...newOffer, description: e.target.value})}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
-                    placeholder="Détails du stage..."
+                    placeholder="Internship details..."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-1">Lieu</label>
+                  <label className="block text-sm font-medium text-zinc-700 mb-1">Location</label>
                   <input 
                     type="text" 
                     value={newOffer.location}
                     onChange={(e) => setNewOffer({...newOffer, location: e.target.value})}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
-                    placeholder="Paris / Télétravail"
+                    placeholder="Algiers / Remote"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-1">Durée</label>
+                  <label className="block text-sm font-medium text-zinc-700 mb-1">Duration</label>
                   <input 
                     type="text" 
                     value={newOffer.duration}
                     onChange={(e) => setNewOffer({...newOffer, duration: e.target.value})}
                     className="w-full px-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
-                    placeholder="6 mois"
+                    placeholder="6 months"
                   />
                 </div>
               </div>
@@ -1188,13 +1188,13 @@ const CompanyDashboard = ({ user, offers, applications, onRefresh }: any) => {
                   onClick={() => setShowAddOffer(false)}
                   className="flex-1 py-2.5 border border-zinc-300 rounded-lg font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                 >
-                  Annuler
+                  Cancel
                 </button>
                 <button 
                   onClick={handleAddOffer}
                   className="flex-1 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
-                  Publier l'offre
+                  Post Offer
                 </button>
               </div>
             </motion.div>
@@ -1248,13 +1248,13 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
             onClick={() => setActiveTab('users')}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'users' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
           >
-            Utilisateurs
+            Users
           </button>
           <button 
             onClick={() => setActiveTab('offers')}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'offers' ? 'bg-indigo-600 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50'}`}
           >
-            Modération
+            Moderation
           </button>
         </div>
       </div>
@@ -1264,21 +1264,21 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
         const companyCount = users.filter((u: User) => u.role === 'company').length;
 
         const appsByStatus = [
-          { name: 'En attente', value: applications.filter((a: any) => a.status === 'pending').length, color: '#f59e0b' },
-          { name: 'Acceptées', value: applications.filter((a: any) => a.status === 'accepted').length, color: '#10b981' },
-          { name: 'Refusées', value: applications.filter((a: any) => a.status === 'rejected').length, color: '#f43f5e' },
+          { name: 'Pending', value: applications.filter((a: any) => a.status === 'pending').length, color: '#f59e0b' },
+          { name: 'Accepted', value: applications.filter((a: any) => a.status === 'accepted').length, color: '#10b981' },
+          { name: 'Rejected', value: applications.filter((a: any) => a.status === 'rejected').length, color: '#f43f5e' },
         ];
 
         const roleData = [
-          { name: 'Étudiants', value: studentCount, color: '#6366f1' },
-          { name: 'Entreprises', value: companyCount, color: '#0ea5e9' },
+          { name: 'Students', value: studentCount, color: '#6366f1' },
+          { name: 'Companies', value: companyCount, color: '#0ea5e9' },
         ];
 
         const barData = [
-          { name: 'Utilisateurs', total: stats.users },
-          { name: 'Offres', total: stats.offers },
-          { name: 'Candidatures', total: stats.applications },
-          { name: 'Acceptées', total: stats.accepted },
+          { name: 'Users', total: stats.users },
+          { name: 'Offers', total: stats.offers },
+          { name: 'Applications', total: stats.applications },
+          { name: 'Accepted', total: stats.accepted },
         ];
 
         return (
@@ -1286,10 +1286,10 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
             {/* KPI Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { label: 'Utilisateurs', value: stats.users, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
-                { label: 'Offres', value: stats.offers, icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-                { label: 'Candidatures', value: stats.applications, icon: FileText, color: 'text-amber-600', bg: 'bg-amber-50' },
-                { label: 'Stages validés', value: stats.accepted, icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                { label: 'Users', value: stats.users, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
+                { label: 'Offers', value: stats.offers, icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                { label: 'Applications', value: stats.applications, icon: FileText, color: 'text-amber-600', bg: 'bg-amber-50' },
+                { label: 'Validated Internships', value: stats.accepted, icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
               ].map((item, i) => (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -1314,7 +1314,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
                 className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm"
               >
-                <h3 className="text-base font-semibold text-zinc-800 mb-6">Vue d'ensemble</h3>
+                <h3 className="text-base font-semibold text-zinc-800 mb-6">Overview</h3>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={barData} barSize={40}>
                     <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#71717a' }} axisLine={false} tickLine={false} />
@@ -1334,7 +1334,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
                   className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm"
                 >
-                  <h3 className="text-base font-semibold text-zinc-800 mb-2">Répartition des utilisateurs</h3>
+                  <h3 className="text-base font-semibold text-zinc-800 mb-2">User Distribution</h3>
                   <div className="flex items-center gap-4">
                     <ResponsiveContainer width={120} height={100}>
                       <PieChart>
@@ -1360,7 +1360,7 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
                   className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm"
                 >
-                  <h3 className="text-base font-semibold text-zinc-800 mb-2">Statut des candidatures</h3>
+                  <h3 className="text-base font-semibold text-zinc-800 mb-2">Application Status</h3>
                   <div className="flex items-center gap-4">
                     <ResponsiveContainer width={120} height={100}>
                       <PieChart>
@@ -1392,9 +1392,9 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-zinc-50 border-b border-zinc-200">
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Nom</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Rôle</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Statut</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Role</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
@@ -1442,9 +1442,9 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-zinc-50 border-b border-zinc-200">
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offre</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Entreprise</th>
-                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Statut</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Offer</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Company</th>
+                <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
@@ -1462,20 +1462,20 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
                             onClick={() => handleOfferStatus(o.id, 'active')}
                             className="px-3 py-1 bg-emerald-600 text-white text-xs font-semibold rounded-md hover:bg-emerald-700 transition-colors"
                           >
-                            Approuver
+                            Approve
                           </button>
                           <button 
                             onClick={() => handleOfferStatus(o.id, 'closed')}
                             className="px-3 py-1 bg-rose-600 text-white text-xs font-semibold rounded-md hover:bg-rose-700 transition-colors"
                           >
-                            Rejeter
+                            Reject
                           </button>
                         </>
                       )}
                       <button 
                         onClick={() => setConfirmDeleteId(o.id)}
                         className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
-                        title="Supprimer l'offre"
+                        title="Delete offer"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -1501,20 +1501,20 @@ const AdminDashboard = ({ user, users, offers, applications, stats, onRefresh }:
               <div className="bg-rose-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trash2 className="w-7 h-7 text-rose-600" />
               </div>
-              <h2 className="text-xl font-bold text-zinc-900 mb-2">Supprimer l'offre ?</h2>
-              <p className="text-zinc-500 text-sm mb-6">Cette action est irréversible. L'offre sera définitivement supprimée.</p>
+              <h2 className="text-xl font-bold text-zinc-900 mb-2">Delete Offer?</h2>
+              <p className="text-zinc-500 text-sm mb-6">This action is irreversible. The offer will be permanently deleted.</p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setConfirmDeleteId(null)}
                   className="flex-1 py-2.5 border border-zinc-300 rounded-lg font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
                 >
-                  Annuler
+                  Cancel
                 </button>
                 <button
                   onClick={() => handleDeleteOffer(confirmDeleteId)}
                   className="flex-1 py-2.5 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition-colors"
                 >
-                  Supprimer
+                  Delete
                 </button>
               </div>
             </motion.div>

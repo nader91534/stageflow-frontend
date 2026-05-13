@@ -141,7 +141,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
 
             {/* Main Headline */}
             <h1 className="text-4xl lg:text-5xl font-extrabold text-zinc-900 leading-tight mb-6">
-              🚀 ابدأ مستقبلك المهني
+               ابدأ مستقبلك المهني
               <span
                 className="block mt-1"
                 style={{
@@ -219,7 +219,6 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
             <div
               className="absolute top-4 left-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
             >
-              <span className="text-blue-500 text-base">🎯</span> +500 عرض تربص
             </div>
             <div
               className="absolute bottom-4 right-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"

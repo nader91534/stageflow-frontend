@@ -87,14 +87,43 @@ const Badge = ({ status }: { status: string }) => {
 
 // --- Landing Page Component ---
 
+const featureItems = [
+  { text: 'آلاف فرص التربص', emoji: '🎯' },
+  { text: 'شركات موثوقة', emoji: '🏢' },
+  { text: 'تسجيل سريع ومجاني', emoji: '⚡' },
+];
+
 const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
   const [scrolled, setScrolled] = React.useState(false);
+  const [activeFeature, setActiveFeature] = React.useState(0);
+  const [phase, setPhase] = React.useState<'icon' | 'text'>('icon');
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Inject Cairo font to match OptiStage's bold modern typography
+  React.useEffect(() => {
+    if (!document.getElementById('cairo-font')) {
+      const link = document.createElement('link');
+      link.id = 'cairo-font';
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800;900&display=swap';
+      document.head.appendChild(link);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    // Phase 1: show icon (0-700ms), Phase 2: show text (700-2200ms), then next item
+    setPhase('icon');
+    const t1 = setTimeout(() => setPhase('text'), 700);
+    const t2 = setTimeout(() => {
+      setActiveFeature(prev => (prev + 1) % featureItems.length);
+    }, 2200);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [activeFeature]);
 
   return (
     <div className="min-h-screen bg-white" dir="rtl">
@@ -133,22 +162,26 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           {/* Text Content - Right side in RTL */}
           <div className="flex-1 text-right">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse inline-block"></span>
-              منصة الطلبة الجزائريين للتربص
-            </div>
-
             {/* Main Headline */}
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-zinc-900 leading-tight mb-6">
-               ابدأ مستقبلك المهني
+            <h1
+              className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6"
+              style={{
+                color: '#111827',
+                fontFamily: "'Cairo', 'Segoe UI', sans-serif",
+                fontWeight: 900,
+                letterSpacing: '-0.02em'
+              }}
+            >
+              ابدأ مستقبلك المهني
               <span
-                className="block mt-1"
+                className="block"
                 style={{
-                  background: 'linear-gradient(135deg, #2563EB 0%, #10B981 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
+                  color: '#2563EB',
+                  fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
+                  fontWeight: 800,
+                  letterSpacing: '-0.03em',
+                  textAlign: 'right',
+                  paddingRight: '2.8rem'
                 }}
               >
                 مع OptiStage
@@ -160,31 +193,53 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
               منصتك الذكية التي تجمع بين الطلبة والشركات للعثور على أفضل فرص التربص والتدريب، حيث يمكن للطلبة اكتشاف عروض متنوعة وتطوير مهاراتهم، كما تتيح للشركات نشر عروضها بسهولة والوصول إلى مواهب شابة ومؤهلة. ابدأ اليوم وخطو أول خطوة نحو مسيرتك المهنية بثقة.
             </p>
 
-            {/* Features mini list */}
-            <div className="flex flex-wrap gap-x-6 gap-y-2 mb-10 text-sm font-medium text-zinc-600">
-              <span className="flex items-center gap-1.5">
-                <span className="text-emerald-500">✔️</span> آلاف فرص التربص
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-emerald-500">✔️</span> شركات موثوقة
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-emerald-500">✔️</span> تسجيل سريع ومجاني
-              </span>
+            {/* Features — Dynamic animated list */}
+            <div className="flex flex-col gap-3 mb-10">
+              {featureItems.map((item, idx) => {
+                const isActive = idx === activeFeature;
+                return (
+                  <div
+                    key={item.text}
+                    className="flex items-center gap-3 transition-all duration-500"
+                    style={{
+                      opacity: isActive ? 1 : 0.38,
+                      transform: isActive ? 'scale(1.04) translateX(-4px)' : 'scale(1)',
+                    }}
+                  >
+                    {/* Icon — appears first */}
+                    <span
+                      className="text-2xl transition-all duration-300"
+                      style={{
+                        opacity: isActive && phase === 'icon' ? 1 : isActive ? 0.6 : 0.3,
+                        transform: isActive && phase === 'icon' ? 'scale(1.3)' : 'scale(1)',
+                      }}
+                    >
+                      {item.emoji}
+                    </span>
+                    {/* Text — appears after icon */}
+                    <span
+                      className="text-sm font-bold transition-all duration-500"
+                      style={{
+                        color: isActive ? '#10B981' : '#6B7280',
+                        opacity: isActive && phase === 'icon' ? 0 : 1,
+                        transform: isActive && phase === 'icon' ? 'translateX(10px)' : 'translateX(0)',
+                      }}
+                    >
+                      ✔️ {item.text}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Text Link */}
             <button
               onClick={onGetStarted}
-              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0"
-              style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
-                borderRadius: '10px',
-                boxShadow: '0 4px 20px rgba(37, 99, 235, 0.35)'
-              }}
+              className="group inline-flex items-center gap-2 font-extrabold text-xl transition-all duration-300 hover:opacity-70"
+              style={{ color: '#111827', background: 'none', border: 'none', cursor: 'pointer' }}
             >
-              <span>🔵 ابدأ الآن</span>
-              <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1">←</span>
+              <span>ابدأ الآن</span>
+              <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1" style={{ color: '#10B981' }}>←</span>
             </button>
 
             {/* Social proof */}
@@ -260,18 +315,20 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
       {/* Bottom CTA */}
       <section className="py-20" dir="rtl">
         <div
-          className="max-w-4xl mx-auto mx-6 rounded-3xl p-12 text-center text-white"
+          className="max-w-4xl mx-auto rounded-3xl p-12 text-center text-white"
           style={{
-            background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #0D9488 100%)',
-            boxShadow: '0 20px 60px rgba(37, 99, 235, 0.3)',
-            margin: '0 24px'
+            background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 60%, #3B82F6 100%)',
+            boxShadow: '0 20px 60px rgba(37, 99, 235, 0.35)',
+            margin: '0 auto',
+            maxWidth: '56rem'
           }}
         >
           <h2 className="text-3xl font-extrabold mb-4">جاهز تبدأ رحلتك؟</h2>
-          <p className="text-blue-100 mb-8 text-lg">انضم مجاناً واكتشف فرص التربص التي تناسبك</p>
+          <p className="mb-8 text-lg" style={{ color: '#BFDBFE' }}>انضم مجاناً واكتشف فرص التربص التي تناسبك</p>
           <button
             onClick={onGetStarted}
-            className="bg-white text-blue-700 font-bold px-10 py-4 rounded-xl hover:bg-blue-50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 text-lg"
+            className="bg-white font-bold px-10 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 text-lg"
+            style={{ color: '#2563EB' }}
           >
             إنشاء حساب مجاني →
           </button>

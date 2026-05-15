@@ -43,7 +43,7 @@ const Navbar = ({ user, onLogout }: { user: User | null, onLogout: () => void })
       <img src={optiStageLogo} alt="OptiStage" className="h-10 w-10 rounded-xl object-cover" />
       <div>
         <span className="font-extrabold text-xl tracking-tight text-zinc-900">OptiStage</span>
-        <p className="text-xs text-zinc-400 leading-none">منصة طلبة الجزائر للبحث عن تربصات</p>
+        <p className="text-xs text-zinc-400 leading-none">The Algerian Student Internship Platform</p>
       </div>
     </div>
     {user && (
@@ -88,9 +88,9 @@ const Badge = ({ status }: { status: string }) => {
 // --- Landing Page Component ---
 
 const featureItems = [
-  { text: 'آلاف فرص التربص', emoji: '🎯' },
-  { text: 'شركات موثوقة', emoji: '🏢' },
-  { text: 'تسجيل سريع ومجاني', emoji: '⚡' },
+  { text: 'Thousands of internship opportunities', emoji: '🎯' },
+  { text: 'Verified & trusted companies', emoji: '🏢' },
+  { text: 'Fast & free registration', emoji: '⚡' },
 ];
 
 const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
@@ -126,7 +126,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
   }, [activeFeature]);
 
   return (
-    <div className="min-h-screen bg-white" dir="rtl">
+    <div className="min-h-screen bg-white" dir="ltr">
       {/* Header */}
       <header
         className="sticky top-0 z-50 transition-all duration-300"
@@ -138,21 +138,21 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo - Left side (in RTL this renders on the right visually) */}
+          {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="bg-white rounded-2xl p-1 shadow-sm border border-zinc-100">
               <img src={optiStageLogo} alt="OptiStage" className="h-10 w-10 rounded-xl object-cover" />
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-zinc-900">OptiStage</span>
-              <p className="text-xs text-zinc-400 leading-none">منصة التربص الذكية</p>
+              <p className="text-xs text-zinc-400 leading-none">Smart Internship Platform</p>
             </div>
           </div>
           <button
             onClick={onGetStarted}
             className="px-5 py-2 text-sm font-semibold text-blue-600 border-2 border-blue-100 rounded-xl hover:bg-blue-50 transition-all duration-200"
           >
-            تسجيل الدخول
+            Sign In
           </button>
         </div>
       </header>
@@ -160,19 +160,19 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 pt-16 pb-24">
         <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Text Content - Right side in RTL */}
-          <div className="flex-1 text-right">
+          {/* Text Content */}
+          <div className="flex-1 text-left">
             {/* Main Headline */}
             <h1
               className="text-4xl lg:text-5xl font-extrabold leading-tight mb-6"
               style={{
                 color: '#111827',
-                fontFamily: "'Cairo', 'Segoe UI', sans-serif",
+                fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
                 fontWeight: 900,
                 letterSpacing: '-0.02em'
               }}
             >
-              ابدأ مستقبلك المهني
+              Launch Your Professional Future
               <span
                 className="block"
                 style={{
@@ -180,17 +180,16 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
                   fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
                   fontWeight: 800,
                   letterSpacing: '-0.03em',
-                  textAlign: 'right',
-                  paddingRight: '2.8rem'
+                  textAlign: 'left',
                 }}
               >
-                مع OptiStage
+                with OptiStage
               </span>
             </h1>
 
             {/* Description */}
             <p className="text-lg text-zinc-500 leading-relaxed mb-8 max-w-xl">
-              منصتك الذكية التي تجمع بين الطلبة والشركات للعثور على أفضل فرص التربص والتدريب، حيث يمكن للطلبة اكتشاف عروض متنوعة وتطوير مهاراتهم، كما تتيح للشركات نشر عروضها بسهولة والوصول إلى مواهب شابة ومؤهلة. ابدأ اليوم وخطو أول خطوة نحو مسيرتك المهنية بثقة.
+              The smart platform connecting students and companies to find the best internship opportunities. Students discover diverse offers and grow their skills, while companies publish listings effortlessly and reach qualified young talent. Start today and take your first step toward a confident career.
             </p>
 
             {/* Features — Dynamic animated list */}
@@ -203,7 +202,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
                     className="flex items-center gap-3 transition-all duration-500"
                     style={{
                       opacity: isActive ? 1 : 0.38,
-                      transform: isActive ? 'scale(1.04) translateX(-4px)' : 'scale(1)',
+                      transform: isActive ? 'scale(1.04) translateX(4px)' : 'scale(1)',
                     }}
                   >
                     {/* Icon — appears first */}
@@ -222,7 +221,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
                       style={{
                         color: isActive ? '#10B981' : '#6B7280',
                         opacity: isActive && phase === 'icon' ? 0 : 1,
-                        transform: isActive && phase === 'icon' ? 'translateX(10px)' : 'translateX(0)',
+                        transform: isActive && phase === 'icon' ? 'translateX(-10px)' : 'translateX(0)',
                       }}
                     >
                       ✔️ {item.text}
@@ -238,13 +237,13 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
               className="group inline-flex items-center gap-2 font-extrabold text-xl transition-all duration-300 hover:opacity-70"
               style={{ color: '#111827', background: 'none', border: 'none', cursor: 'pointer' }}
             >
-              <span>ابدأ الآن</span>
-              <span className="inline-block transition-transform duration-300 group-hover:-translate-x-1" style={{ color: '#10B981' }}>←</span>
+              <span>Get Started Now</span>
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1" style={{ color: '#10B981' }}>→</span>
             </button>
 
             {/* Social proof */}
             <p className="mt-5 text-sm text-zinc-400">
-              انضم إلى آلاف الطلاب الذين وجدوا فرصتهم عبر OptiStage
+              Join thousands of students who found their opportunity through OptiStage
             </p>
           </div>
 
@@ -272,13 +271,9 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
             </div>
             {/* Floating badges */}
             <div
-              className="absolute top-4 left-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
+              className="absolute bottom-4 left-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
             >
-            </div>
-            <div
-              className="absolute bottom-4 right-4 bg-white px-3 py-2 rounded-xl shadow-lg border border-zinc-100 text-xs font-semibold text-zinc-700 flex items-center gap-2"
-            >
-              <span className="text-emerald-500 text-base">✅</span> شركات موثوقة
+              <span className="text-emerald-500 text-base">✅</span> Verified Companies
             </div>
           </div>
         </div>
@@ -289,14 +284,14 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
         className="py-20"
         style={{ background: 'linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%)' }}
       >
-        <div className="max-w-7xl mx-auto px-6 text-center" dir="rtl">
-          <h2 className="text-3xl font-extrabold text-zinc-900 mb-4">لماذا OptiStage؟</h2>
-          <p className="text-zinc-500 mb-12 max-w-xl mx-auto">كل ما تحتاجه في مكان واحد لإطلاق مسيرتك المهنية</p>
+        <div className="max-w-7xl mx-auto px-6 text-center" dir="ltr">
+          <h2 className="text-3xl font-extrabold text-zinc-900 mb-4">Why OptiStage?</h2>
+          <p className="text-zinc-500 mb-12 max-w-xl mx-auto">Everything you need in one place to kick-start your professional career</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: '🔍', title: 'بحث ذكي', desc: 'ابحث بسهولة عن التربصات حسب التخصص، الموقع، والمدة.' },
-              { icon: '🏢', title: 'شركات معتمدة', desc: 'جميع الشركات المسجلة خضعت للمراجعة والتحقق من الهوية.' },
-              { icon: '⚡', title: 'تقديم فوري', desc: 'أرسل ملفك ورسالتك التحفيزية بنقرة واحدة فقط.' },
+              { icon: '🔍', title: 'Smart Search', desc: 'Easily find internships by field, location, and duration.' },
+              { icon: '🏢', title: 'Verified Companies', desc: 'Every registered company is reviewed and identity-verified.' },
+              { icon: '⚡', title: 'Instant Apply', desc: 'Send your CV and cover letter with a single click.' },
             ].map((f) => (
               <div
                 key={f.title}
@@ -313,7 +308,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-20" dir="rtl">
+      <section className="py-20" dir="ltr">
         <div
           className="max-w-4xl mx-auto rounded-3xl p-12 text-center text-white"
           style={{
@@ -323,26 +318,26 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
             maxWidth: '56rem'
           }}
         >
-          <h2 className="text-3xl font-extrabold mb-4">جاهز تبدأ رحلتك؟</h2>
-          <p className="mb-8 text-lg" style={{ color: '#BFDBFE' }}>انضم مجاناً واكتشف فرص التربص التي تناسبك</p>
+          <h2 className="text-3xl font-extrabold mb-4">Ready to Begin Your Journey?</h2>
+          <p className="mb-8 text-lg" style={{ color: '#BFDBFE' }}>Join for free and discover the internship opportunities that are right for you</p>
           <button
             onClick={onGetStarted}
             className="bg-white font-bold px-10 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 text-lg"
             style={{ color: '#2563EB' }}
           >
-            إنشاء حساب مجاني →
+            Create a Free Account →
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-100 py-8" dir="rtl">
+      <footer className="border-t border-zinc-100 py-8" dir="ltr">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <img src={optiStageLogo} alt="OptiStage" className="h-7 w-7 rounded-lg object-cover" />
             <span className="font-bold text-zinc-700">OptiStage</span>
           </div>
-          <p className="text-zinc-400 text-sm">© 2025 OptiStage — منصة طلبة الجزائر للبحث عن تربصات</p>
+          <p className="text-zinc-400 text-sm">© 2025 OptiStage — The Algerian Student Internship Platform</p>
         </div>
       </footer>
     </div>

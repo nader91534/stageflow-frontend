@@ -621,6 +621,7 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [cvBase64, setCvBase64] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewingOffer, setViewingOffer] = useState<Offer | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filteredOffers = offers.filter((o: Offer) => {
@@ -728,24 +729,33 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                   <Search className="w-3.5 h-3.5" /> {offer.location}
                 </div>
               </div>
-              {(() => {
-                const alreadyApplied = appliedOfferIds.has(String(offer.id));
-                return (
-                  <button
-                    onClick={() => !alreadyApplied && setApplyingTo(offer)}
-                    disabled={alreadyApplied}
-                    className={`w-full py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 ${
-                      alreadyApplied
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-not-allowed'
-                        : 'bg-zinc-900 text-white hover:bg-zinc-800'
-                    }`}
-                  >
-                    {alreadyApplied ? (
-                      <><CheckCircle className="w-4 h-4" /> Already Applied</>
-                    ) : 'Apply'}
-                  </button>
-                );
-              })()}
+              <div className="flex gap-2 w-full mt-auto">
+                <button
+                  onClick={() => setViewingOffer(offer)}
+                  className="flex-1 py-2 border border-zinc-200 rounded-lg text-zinc-700 hover:text-indigo-600 font-medium hover:bg-zinc-50 hover:border-zinc-300 transition-colors flex items-center justify-center gap-1.5 text-sm"
+                >
+                  <Eye className="w-4 h-4" />
+                  Details
+                </button>
+                {(() => {
+                  const alreadyApplied = appliedOfferIds.has(String(offer.id));
+                  return (
+                    <button
+                      onClick={() => !alreadyApplied && setApplyingTo(offer)}
+                      disabled={alreadyApplied}
+                      className={`flex-1 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-1.5 text-sm ${
+                        alreadyApplied
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-not-allowed'
+                          : 'bg-zinc-900 text-white hover:bg-zinc-800'
+                      }`}
+                    >
+                      {alreadyApplied ? (
+                        <><CheckCircle className="w-4 h-4" /> Applied</>
+                      ) : 'Apply'}
+                    </button>
+                  );
+                })()}
+              </div>
             </motion.div>
             ))}
           </div>
@@ -867,6 +877,107 @@ const StudentDashboard = ({ user, offers, applications, onRefresh }: any) => {
                 >
                   Submit
                 </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Offer Details Modal */}
+      <AnimatePresence>
+        {viewingOffer && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6 z-[60]">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white p-8 rounded-2xl shadow-2xl border border-zinc-200 w-full max-w-2xl overflow-y-auto max-h-[90vh] relative text-left"
+            >
+              <button 
+                onClick={() => setViewingOffer(null)}
+                className="absolute top-5 right-5 p-1.5 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+
+              <div className="flex gap-4 mb-6 pr-8">
+                <div className="bg-indigo-50 p-4 rounded-xl shrink-0 flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-indigo-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-zinc-900 leading-tight mb-1">{viewingOffer.title}</h2>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-md text-indigo-600 font-semibold">{viewingOffer.company_name}</span>
+                    <Badge status={viewingOffer.status} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-6 bg-zinc-50 p-4 rounded-xl border border-zinc-100">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-indigo-500" />
+                  <div>
+                    <p className="text-xs text-zinc-400 font-medium uppercase tracking-wider">Duration</p>
+                    <p className="text-sm font-semibold text-zinc-700">{viewingOffer.duration}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Search className="w-5 h-5 text-indigo-500" />
+                  <div>
+                    <p className="text-xs text-zinc-400 font-medium uppercase tracking-wider">Location</p>
+                    <p className="text-sm font-semibold text-zinc-700">{viewingOffer.location}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Description</h4>
+                  <div className="text-zinc-600 text-sm leading-relaxed whitespace-pre-wrap max-h-60 overflow-y-auto pr-2 bg-zinc-50/30 p-3 rounded-lg border border-zinc-100">
+                    {viewingOffer.description}
+                  </div>
+                </div>
+
+                {viewingOffer.requirements && (
+                  <div>
+                    <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Requirements</h4>
+                    <div className="text-zinc-600 text-sm leading-relaxed whitespace-pre-wrap bg-indigo-50/30 p-4 rounded-xl border border-indigo-50/50">
+                      {viewingOffer.requirements}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex gap-3 mt-8 pt-6 border-t border-zinc-100">
+                <button 
+                  onClick={() => setViewingOffer(null)}
+                  className="flex-1 py-2.5 border border-zinc-300 rounded-lg font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
+                >
+                  Close
+                </button>
+                {(() => {
+                  const alreadyApplied = appliedOfferIds.has(String(viewingOffer.id));
+                  return (
+                    <button
+                      onClick={() => {
+                        if (!alreadyApplied) {
+                          setApplyingTo(viewingOffer);
+                          setViewingOffer(null);
+                        }
+                      }}
+                      disabled={alreadyApplied}
+                      className={`flex-1 py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+                        alreadyApplied
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-not-allowed'
+                          : 'bg-zinc-900 text-white hover:bg-zinc-800'
+                      }`}
+                    >
+                      {alreadyApplied ? (
+                        <><CheckCircle className="w-4 h-4" /> Already Applied</>
+                      ) : 'Apply Now'}
+                    </button>
+                  );
+                })()}
               </div>
             </motion.div>
           </div>

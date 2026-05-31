@@ -33,9 +33,7 @@ import {
 import optiStageLogo from './assets/optistage_logo.png';
 import studentHero from './assets/student_hero.png';
 
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:5000'
-  : 'https://stageflow-backend-e6lo.onrender.com';
+const API_URL = 'https://stageflow-backend-e6lo.onrender.com';
 
 // --- Components ---
 
